@@ -1,0 +1,10 @@
+{
+  "salutation": "Mr.",
+  "fullname": "John Doe",
+  "street": "Blumenweg 1",
+  "city": "Kleindorf",
+  "postCode": "12345",
+  "country": "Switzerland",
+  "birthdate": "1988-12-10",
+  "socialSecurityNumber": "987-44-8327"
+}

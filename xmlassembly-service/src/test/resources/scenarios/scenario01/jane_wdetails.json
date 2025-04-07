@@ -1,0 +1,10 @@
+{
+  "salutation": "Ms.",
+  "fullname": "Jane Doe",
+  "street": "Blumenweg 1",
+  "city": "Kleindorf",
+  "postCode": "12345",
+  "country": "Switzerland",
+  "birthdate": "1990-01-01",
+  "socialSecurityNumber": "987-65-4321"
+}

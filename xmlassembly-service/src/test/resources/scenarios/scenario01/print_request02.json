@@ -1,0 +1,27 @@
+{
+  "businessTrigger": "CONTRACT_READY",
+  "dossier": {
+    "dossierId": "a1b2c3d4-e5f6-7890-abcd-ef0123456789",
+    "borrower": {
+      "clientId": "11111111-2222-3333-4444-555555555555",
+      "borrowerPersons": [
+        {
+          "salutation": "Mr.",
+          "fullname": "John Doe",
+          "street": "Blumenweg 1",
+          "city": "Kleindorf",
+          "postCode": "12345",
+          "country": "Switzerland"
+        },
+        {
+          "salutation": "Mrs.",
+          "fullname": "Jane Doe",
+          "street": "Blumenweg 1",
+          "city": "Kleindorf",
+          "postCode": "12345",
+          "country": "Switzerland"
+        }
+      ]
+    }
+  }
+}

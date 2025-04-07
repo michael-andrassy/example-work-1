@@ -1,0 +1,14 @@
+[
+  {
+    "policyNo": "POL123456",
+    "policyholderFullname": "Alice Smith"
+  },
+  {
+    "policyNo": "POL789012",
+    "policyholderFullname": "Bob Johnson"
+  },
+  {
+    "policyNo": "POL345678",
+    "policyholderFullname": "Carol Williams"
+  }
+]

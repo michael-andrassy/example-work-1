@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
+
+    <groupId>demo.xmlassembly</groupId>
+    <artifactId>xmlschema-v1</artifactId>
+    <version>1.1-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+
+<properties>
+    <!-- Specify Java 21 for compilation -->
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- JAXB2 plugin version -->
+    <jaxb2.plugin.version>3.3.0</jaxb2.plugin.version>
+</properties>
+
+    <dependencies>
+        <!-- Dependency for Jakarta XML Binding API -->
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+    </dependencies>
+
+<build>
+    <plugins>
+        <!-- JAXB2 Maven Plugin: generate Java sources from XSD -->
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>jaxb2-maven-plugin</artifactId>
+            <version>${jaxb2.plugin.version}</version>
+            <executions>
+                <execution>
+                    <id>xjc</id>
+                    <goals>
+                        <goal>xjc</goal>
+                    </goals>
+                    <configuration>
+                        <!-- Location of your XSD file(s) -->
+                        <!--
+
+                        <schemaDirectory>src/main/xsd</schemaDirectory>
+                        <includes>
+                            <include>oms_request.xsd</include>
+                        </includes>
+                        -->
+                        <!-- Root package for generated classes -->
+                        <packageName>demo.xmlassembly.omsxml.gen.privatecustomer</packageName>
+                        <!-- Optional: override output directory (default is target/generated-sources/xjc) -->
+                        <outputDirectory>${project.build.directory}/generated-sources/xjc</outputDirectory>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+
+        <!-- Maven Compiler Plugin: compile using Java 21 -->
+        <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.10.1</version>
+            <configuration>
+                <source>${maven.compiler.source}</source>
+                <target>${maven.compiler.target}</target>
+                <!-- Include generated sources in compilation -->
+                <generatedSourcesDirectory>${project.build.directory}/generated-sources/xjc</generatedSourcesDirectory>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+</project>

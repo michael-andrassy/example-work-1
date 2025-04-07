@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://www.example.com/demo/xmlassembly/xml"
+           xmlns="http://www.example.com/demo/xmlassembly/xml"
+           elementFormDefault="qualified">
+
+    <!-- Root element -->
+    <xs:element name="document">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="metadata" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="content" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Metadata element -->
+    <xs:element name="metadata">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="timestamp" type="xs:dateTime"/>
+                <xs:element name="document-id" type="xs:string"/>
+                <xs:element name="document-type" type="xs:string"/>
+                <xs:element name="client-id" type="xs:string"/>
+                <xs:element name="dossier-id" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Content element -->
+    <xs:element name="content">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Header" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                <xs:element ref="borrower"/>
+                <xs:element ref="collaterals"/>
+                <xs:element ref="signatures"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Borrower element with an id attribute and a list of individuals -->
+    <xs:element name="borrower">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="individual" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="salutation" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                            <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="street" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                            <xs:element name="city" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                            <xs:element name="postalCode" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                            <xs:element name="country" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                            <xs:element name="birthdate" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                            <xs:element name="ahvNo" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Borrower element with an id attribute and a list of individuals -->
+    <xs:element name="signatures">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="signature" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                            <xs:element name="role" type="xs:string" minOccurs="0" maxOccurs="1"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Abstract collateral element as the head of the substitution group -->
+    <xs:element name="collateral" abstract="true"/>
+
+    <!-- Collaterals element containing a polymorphic list of collateral types -->
+    <xs:element name="collaterals">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="lifeinsurance" maxOccurs="unbounded"/>
+                <xs:element ref="securities" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Life Insurance collateral, substitutable for collateral -->
+    <xs:element name="lifeinsurance" substitutionGroup="collateral">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="policyNumber" type="xs:string"/>
+                <xs:element name="holder" type="xs:string"/>
+                <xs:element name="coverageAmount" type="xs:decimal"/>
+                <xs:element name="premium" type="xs:decimal"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Securities collateral, substitutable for collateral -->
+    <xs:element name="securities" substitutionGroup="collateral">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="position" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="amount" type="xs:decimal"/>
+                            <xs:element name="details" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
