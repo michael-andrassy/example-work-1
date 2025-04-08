@@ -50,6 +50,8 @@ class PrivateDataServiceClientImpl extends ARestClientComponent implements Priva
     @Override
     public PersonPrivateDataRecord getPrivateData(String key) {
 
+        log.debug("Rest-Client - Fetching additional personal data {}", key);
+
         // Build the URI from the baseUrl and path segments
         final URI uri = UriComponentsBuilder.fromUriString(baseUrl)
                 .pathSegment( key )

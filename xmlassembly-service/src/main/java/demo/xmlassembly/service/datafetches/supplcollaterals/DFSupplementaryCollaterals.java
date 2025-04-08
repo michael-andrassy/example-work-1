@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 public interface DFSupplementaryCollaterals {
 
-    // arbitrary decision - while the underlying service returns results per person, this df returns all insurances for the dossier
+    // the signature is an arbitrary decision - while the underlying service returns results per person, this df returns all insurances for the dossier
     Map<String, List<LifeInsuranceCollateral>> fetchLifeInsuranceCollaterals(Dossier dossier);
 
 } //class
@@ -39,6 +39,9 @@ class DFSupplementaryCollateralsImpl implements DFSupplementaryCollaterals {
     )
     @Override
     public Map<String, List<LifeInsuranceCollateral>> fetchLifeInsuranceCollaterals(Dossier dossier) {
+
+        log.debug("Data-Fetch - Life insurances {}", dossier.getDossierId());
+
 
         final List<String> allNames =
                 dossier.getBorrower().getPersons().stream().

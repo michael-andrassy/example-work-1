@@ -43,6 +43,9 @@ public class PledgeLifeinsuranceDocumentTypeHandler implements DocumentTypeHandl
     @Override
     public SingleOmsRequestCreationResult process(DocumentCreationTask documentCreationTask) {
 
+        log.debug("starting document request-production for {} to produce in context {}", documentCreationTask.getDocType(),
+                documentCreationTask.getAdditionalParams());
+
         // while this method looks like one could build a bit of generic framework around it,
         // this way it's much simpler - unifying the interfaces of data-fetches and other components
         // for uniform processing would introduce a number of compromises and extra effort

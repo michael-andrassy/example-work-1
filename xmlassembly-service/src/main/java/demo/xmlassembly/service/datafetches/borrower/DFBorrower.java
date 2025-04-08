@@ -44,6 +44,8 @@ class DFBorrowerImpl implements DFBorrower {
     @Override
     public BorrowerData fetchBorrowerData(Dossier dossier, boolean fetchSpouses, boolean fetchPrivateDetails) {
 
+        log.debug("Data-Fetch - Borrower data {}", dossier.getDossierId());
+
         List<PersonWithPrivateData> borrowers = fetchBorrowerPersons(dossier, fetchPrivateDetails);
 
         final List<Person> spouses;

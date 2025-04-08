@@ -48,6 +48,8 @@ class FamilyMembersServiceClientImpl extends ARestClientComponent implements Fam
     @Override
     public PersonDataRecord getSpouseOf(String key) {
 
+        log.debug("Rest-Client - Fetching information regarding spouses {}", key);
+
         final URI uri = UriComponentsBuilder.fromUriString(baseUrl)
                 .pathSegment( key )
                 .build()

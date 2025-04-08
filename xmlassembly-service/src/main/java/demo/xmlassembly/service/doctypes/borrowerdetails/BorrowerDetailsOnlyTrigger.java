@@ -28,6 +28,8 @@ public class BorrowerDetailsOnlyTrigger implements DocumentTrigger {
 
         if (applicableBusinessContexts.contains( request.getBusinessContext() ) ) {
 
+            log.debug("derived {} to produce in context {}", 1, request.getBusinessContext());
+
             return List.of(
 
                     DocumentCreationTask.builder().

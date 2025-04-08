@@ -52,6 +52,8 @@ class CollateralsServiceClientImpl extends ARestClientComponent implements Colla
     @Override
     public List<LifeInsuranceCollateralRecord> getLifeInsuranceCollaterals(String dossierId, String key) {
 
+        log.debug("Rest-Client - Fetching pledged life insurance collaterals {} {}", dossierId, key);
+
         // Build the URI from the baseUrl and path segments
         final URI uri = UriComponentsBuilder.fromUriString(baseUrl)
                 .pathSegment(dossierId, "lifeinsurances", key)
@@ -63,6 +65,8 @@ class CollateralsServiceClientImpl extends ARestClientComponent implements Colla
 
     @Override
     public List<PledgedPortfolioCollateralRecord> getPledgedPortfolioCollaterals(String dossierId, String key) {
+
+        log.debug("Rest-Client - Fetching pledged portfolio collaterals {} {}", dossierId, key);
 
         // Build the URI from the baseUrl and path segments
         final URI uri = UriComponentsBuilder.fromUriString(baseUrl)

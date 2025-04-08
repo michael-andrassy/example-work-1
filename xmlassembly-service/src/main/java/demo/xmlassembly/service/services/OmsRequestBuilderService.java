@@ -36,25 +36,28 @@ class OmsRequestBuilderServiceImpl implements OmsRequestBuilderService {
         // while it would easily be feasible such parallelism is likely to
         // reduce the effectiveness of the caching around the data fetches
 
-        // also, in the data fetches I mentioned a requestId to be appended to
+        // also, in the data fetches I suggested a requestId to be appended to
         // the caching keys, this request Id could be generated here - random UUID
+        // From here we'd have to pass it down to each data fetch - for now, left out to help clarity
 
         log.info("Received request to create OMS requests, client={}, dossier={}, {}",
                 request.getDossier().getClientId(), request.getDossier().getDossierId(), request.getBusinessContext());
 
         //stage 1: figure out which single documents need to be created
 
-        //present the request to all document-triggers and unify their results
+        //present the request to all document-triggers and unify their results into a flat list
         final List<DocumentCreationTask> allDocumentCreationTasks =
                 allDocumentTriggers.stream().
                         map(T -> T.getDocumentsToBeBuilt( request )).flatMap(List::stream).
                         toList();
 
+        log.debug("{} documents to create OMS requests for", allDocumentCreationTasks.size());
+
         //stage 2: create an OMS-request for each of these document creation tasks
 
         final Map<EDocType, DocumentTypeHandler> mapDocType2Handler = getDocType2HandlerMap();
 
-        //for the sake of nice console output, no parallelism here -> allDocumentCreationTasks.parallelStream()
+        //now, that we have the map docType->handler - loop over those document creation tasks at hand
         final List<SingleOmsRequestCreationResult> allOmsRequests = allDocumentCreationTasks.stream().
                 map(T -> {
 
@@ -63,10 +66,14 @@ class OmsRequestBuilderServiceImpl implements OmsRequestBuilderService {
                         throw new RuntimeException("Cannot handle document type " + T.getDocType());
                     }
 
+                    log.debug("processing request for a document of type {} ", T.getDocType());
+
                     final SingleOmsRequestCreationResult omsRequest4Document = handler.process(T);
                     return omsRequest4Document;
                 }).
                 toList();
+
+        log.debug("done. produced {} requests", allOmsRequests.size());
 
         return MultipleOmsRequestCreationResult.builder().
                 dossierId( request.getDossier().getDossierId() ).
@@ -76,6 +83,7 @@ class OmsRequestBuilderServiceImpl implements OmsRequestBuilderService {
                 build();
     } //m
 
+    // each document type handler exposes "his" document type, let's present this as a map
     private Map<EDocType, DocumentTypeHandler> getDocType2HandlerMap() {
 
         Map<EDocType, DocumentTypeHandler> result = new HashMap<>();

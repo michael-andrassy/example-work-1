@@ -73,6 +73,8 @@ public class PledgeLifeinsuranceTrigger implements DocumentTrigger {
                     flatMap(List::stream). //lets flatten those sublists per policy
                     toList();
 
+            log.debug("derived {} to produce in context {}", documentCreationTasks.size(), request.getBusinessContext());
+
             return documentCreationTasks;
 
         } else return List.of();
